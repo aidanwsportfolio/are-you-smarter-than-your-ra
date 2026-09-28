@@ -12,7 +12,9 @@ function App() {
   const [puzzleSolved, setPuzzleSolved] = useState(false)
   const [currentPuzzleIndex, setCurrentPuzzleIndex] = useState(0)
   const [buyingVowel, setBuyingVowel] = useState(false)
-
+  const [wheelRotation, setWheelRotation] = useState(0)
+  const [isSpinning, setIsSpinning] = useState(false)
+ 
   // Game data
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
   const vowels = ['A', 'E', 'I', 'O', 'U']
@@ -113,26 +115,49 @@ function App() {
   }
 
   function spinWheel() {
+    if (isSpinning) {
+      return
+    }
+
+    setIsSpinning(true)
     setSpinResult(null)
 
     const randomIndex = Math.floor(Math.random() * wheelValues.length)
     const result = wheelValues[randomIndex]
 
-    setSpinResult(result)
+    const segmentAngle = 360 / wheelValues.length
 
-    if (result === 'BANKRUPT') {
-      if (currentTeam === 'RA') {
-        setRaScore(0)
-      } else {
-        setStudentScore(0)
+    const extraSpins = 5 * 360
+
+    const targetRotation =
+      wheelRotation +
+      extraSpins +
+      (360 - randomIndex * segmentAngle)
+
+    setWheelRotation(targetRotation)
+
+    setTimeout(() => {
+      setSpinResult(result)
+      setIsSpinning(false)
+
+      if (result === 'BANKRUPT') {
+        if (currentTeam === 'RA') {
+          setRaScore(0)
+        } else {
+          setStudentScore(0)
+        }
+
+        setCurrentTeam(
+          currentTeam === 'RA' ? 'Students' : 'RA'
+        )
       }
 
-      setCurrentTeam(currentTeam === 'RA' ? 'Students' : 'RA')
-    }
-
-    if (result === 'LOSE A TURN') {
-      setCurrentTeam(currentTeam === 'RA' ? 'Students' : 'RA')
-    }
+      if (result === 'LOSE A TURN') {
+        setCurrentTeam(
+          currentTeam === 'RA' ? 'Students' : 'RA'
+        )
+      }
+    }, 3000)
   }
 
   function nextRound() {
@@ -145,6 +170,18 @@ function App() {
     }
   }
 
+  function resetGame() {
+  setRaScore(0)
+  setStudentScore(0)
+  setCurrentTeam('RA')
+  setGuessedLetters([])
+  setSpinResult(null)
+  setPuzzleSolved(false)
+  setCurrentPuzzleIndex(0)
+  setBuyingVowel(false)
+  setWheelRotation(0)
+  setIsSpinning(false)
+}
   return (
     <div>
       <h1>Are You Smarter Than Your RA?</h1>
@@ -165,30 +202,65 @@ function App() {
             </h3>
 
             <div className="puzzle-board">
-              {puzzle.split('').map((character, index) => (
-                <span
-                  key={index}
-                  className={
-                    character === ' ' ? 'puzzle-space' : 'puzzle-tile'
-                  }
-                >
-                  {guessedLetters.includes(character) || puzzleSolved
-                    ? character
-                    : ''}
-                </span>
+              {puzzle.split(' ').map((word, wordIndex) => (
+                <div className="puzzle-word" key={wordIndex}>
+
+                  {word.split('').map((character, characterIndex) => (
+                    <span
+                      className="puzzle-tile"
+                      key={characterIndex}
+                    >
+                      {guessedLetters.includes(character) ||
+                        puzzleSolved ||
+                        !/[A-Z]/.test(character)
+                          ? character
+                          : ''}
+                    </span>
+                  ))}
+
+                </div>
               ))}
             </div>
           </div>
 
-          {/* Wheel controls */}
-          <div>
-            <button onClick={spinWheel}>
-              Spin Wheel
+          {/* Wheel */}
+          <div className="wheel-area">
+
+            <div className="wheel-container">
+
+              <div className="wheel-pointer">
+                ▼
+              </div>
+
+              <div
+                className="wheel"
+                style={{
+                  transform: `rotate(${wheelRotation}deg)`
+                }}
+              >
+                <div className="wheel-center">
+                  SPIN
+                </div>
+              </div>
+
+            </div>
+
+            <button
+              className="spin-button"
+              onClick={spinWheel}
+              disabled={isSpinning}
+            >
+              {isSpinning ? 'Spinning...' : 'Spin Wheel'}
             </button>
 
             {spinResult !== null && (
-              <h2>Spin: {spinResult}</h2>
+              <div className="spin-result">
+                {typeof spinResult === 'number'
+                  ? `$${spinResult}`
+                  : spinResult}
+              </div>
             )}
+
           </div>
 
           {/* Buy vowel */}
@@ -228,25 +300,43 @@ function App() {
             Solve Puzzle
           </button>
 
-          <button onClick={nextRound}>
+          <button
+            onClick={nextRound}
+            disabled={currentPuzzleIndex === puzzles.length - 1}
+          >
             Next Round
           </button>
 
-          {/* Team RA scoreboard */}
-          <h2>Team RA</h2>
-          <p>${raScore}</p>
+          {/* Scoreboard */}
+          <div className="scoreboard">
 
-          <button onClick={() => setRaScore(raScore + 500)}>
-            +$500
-          </button>
+            <div
+              className={`score-card ${
+                currentTeam === 'RA' ? 'active-team' : ''
+              }`}
+            >
+              <h2>TEAM RA</h2>
+              <p>${raScore}</p>
 
-          {/* Team Students scoreboard */}
-          <h2>Team Students</h2>
-          <p>${studentScore}</p>
+              <button onClick={() => setRaScore(raScore + 500)}>
+                +$500
+              </button>
+            </div>
 
-          <button onClick={() => setStudentScore(studentScore + 500)}>
-            +$500
-          </button>
+            <div
+              className={`score-card ${
+                currentTeam === 'Students' ? 'active-team' : ''
+              }`}
+            >
+              <h2>TEAM STUDENTS</h2>
+              <p>${studentScore}</p>
+
+              <button onClick={() => setStudentScore(studentScore + 500)}>
+                +$500
+              </button>
+            </div>
+
+          </div>
 
           {/* Manual turn control */}
           <button
@@ -258,7 +348,12 @@ function App() {
           >
             Switch Turn
           </button>
-
+            <button
+              className="reset-button"
+              onClick={resetGame}
+            >
+              Reset Game
+            </button>
         </div>
       ) : (
         <button onClick={() => setGameStarted(true)}>
