@@ -4,23 +4,34 @@
   min-height: 100vh;
 }
 
+:root {
+  --campus-purple: #36115f;
+  --campus-cream: #faf6e7;
+  --scoreboard-gold: #fecf32;
+}
+
 body {
-  background:
-    radial-gradient(circle at top, #312e81 0%, #111827 45%, #030712 100%);
-  color: white;
+  background: var(--campus-cream);
+  color: var(--campus-purple);
 }
 
 h1 {
   margin: 0;
-  padding-top: 24px;
+  padding: 28px 20px 0;
   text-align: center;
-  font-size: 42px;
+
+  font-family: Rockwell, "Clarendon", Georgia, serif;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 #root > div > h2 {
   text-align: center;
   margin-top: 8px;
-  color: #fbbf24;
+  color: var(--campus-purple);
 }
 
 
@@ -56,21 +67,27 @@ h1 {
 .puzzle-section {
   max-width: 1100px;
   margin: 0 auto 25px;
-  padding: 20px;
+  padding: 24px 20px;
 
-  background: rgba(0, 0, 0, 0.3);
-
-  border: 2px solid rgba(255, 255, 255, 0.15);
-  border-radius: 18px;
+  background: var(--campus-purple);
+  border: 6px double var(--campus-cream);
+  border-radius: 0;
+  outline: 2px solid var(--campus-purple);
 }
 
 .category {
-  margin: 0 0 20px;
+  display: table;
+  max-width: 100%;
+  margin: 0 auto 24px;
+  padding: 8px 24px;
 
-  color: #fbbf24;
+  background: var(--campus-cream);
+  color: var(--campus-purple);
 
-  font-size: 22px;
-  letter-spacing: 2px;
+  font-family: Rockwell, "Clarendon", Georgia, serif;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 1px;
   text-transform: uppercase;
 }
 
@@ -91,18 +108,23 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 
   width: 42px;
   height: 55px;
 
-  background: white;
-  color: #111827;
+  background: var(--campus-cream);
+  color: var(--campus-purple);
 
-  border: 3px solid #10b981;
-  border-radius: 4px;
+  border: 2px solid #21132f;
+  border-radius: 0;
+  box-shadow:
+    inset 0 0 0 2px #d7ccb0,
+    0 3px 0 #160c23;
 
+  font-family: Rockwell, "Clarendon", Georgia, serif;
   font-size: 30px;
-  font-weight: bold;
+  font-weight: 900;
 }
 
 .puzzle-space {
@@ -127,24 +149,24 @@ h1 {
 .letter-board button {
   width: 44px;
   height: 44px;
-
   padding: 0;
 
-  border: 2px solid #fbbf24;
-  border-radius: 7px;
+  border: 2px solid var(--campus-purple);
+  border-radius: 0;
 
-  background: #1f2937;
-  color: white;
+  background: var(--campus-cream);
+  color: var(--campus-purple);
 
-  font-size: 17px;
-  font-weight: bold;
+  font-family: Rockwell, "Clarendon", Georgia, serif;
+  font-size: 20px;
+  font-weight: 900;
 
   cursor: pointer;
 }
 
 .letter-board button:hover:not(:disabled) {
-  background: #fbbf24;
-  color: #111827;
+  background: var(--scoreboard-gold);
+  color: var(--campus-purple);
 }
 
 .letter-board button:disabled {
@@ -159,21 +181,22 @@ button {
   margin: 5px;
   padding: 10px 18px;
 
-  border: none;
-  border-radius: 8px;
+  border: 2px solid var(--campus-purple);
+  border-radius: 0;
 
-  background: #4f46e5;
-  color: white;
+  background: var(--campus-cream);
+  color: var(--campus-purple);
 
+  font-family: Rockwell, "Clarendon", Georgia, serif;
   font-size: 16px;
   font-weight: bold;
+  text-transform: uppercase;
 
   cursor: pointer;
 }
 
 button:hover:not(:disabled) {
-  transform: translateY(-1px);
-  filter: brightness(1.15);
+  background: var(--scoreboard-gold);
 }
 
 button:disabled {
@@ -210,39 +233,44 @@ button:disabled {
 
 .score-card {
   flex: 1;
+  min-width: 0;
   max-width: 350px;
-
   padding: 18px;
 
-  background: rgba(17, 24, 39, 0.9);
+  background: var(--campus-purple);
+  color: var(--campus-cream);
 
-  border: 3px solid #4b5563;
-  border-radius: 15px;
-
-  transition: 0.2s;
+  border: 3px solid var(--campus-purple);
+  border-radius: 0;
+  outline: 1px solid var(--campus-cream);
+  outline-offset: -7px;
 }
 
 .score-card h2 {
-  margin: 0 0 5px;
+  margin: 0 0 12px;
+
+  font-family: Rockwell, "Clarendon", Georgia, serif;
+  font-size: 24px;
+  font-weight: 900;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
 }
 
 .score-card p {
-  margin: 5px 0;
+  margin: 10px 0;
+  padding: 10px;
 
-  color: #fbbf24;
+  background: #19171b;
+  color: var(--scoreboard-gold);
 
-  font-size: 38px;
+  font-family: "Courier New", monospace;
+  font-size: clamp(28px, 4vw, 44px);
   font-weight: bold;
 }
 
 .score-card.active-team {
-  border-color: #fbbf24;
-
-  box-shadow:
-    0 0 12px rgba(251, 191, 36, 0.6),
-    0 0 25px rgba(251, 191, 36, 0.25);
-
-  transform: scale(1.03);
+  border-color: var(--scoreboard-gold);
+  box-shadow: 0 5px 0 var(--scoreboard-gold);
 }
 
 .puzzle-word {
@@ -274,32 +302,32 @@ button:disabled {
   width: 100%;
   height: 100%;
 
-  border: 8px solid #fbbf24;
+  
   border-radius: 50%;
+  border: 8px solid var(--campus-purple);
 
-  background: conic-gradient(
-    #ef4444 0deg 36deg,
-    #3b82f6 36deg 72deg,
-    #22c55e 72deg 108deg,
-    #f97316 108deg 144deg,
-    #a855f7 144deg 180deg,
-    #eab308 180deg 216deg,
-    #06b6d4 216deg 252deg,
-    #ec4899 252deg 288deg,
-    #111827 288deg 324deg,
-    #64748b 324deg 360deg
-  );
+background: conic-gradient(
+  #efc438 0deg 36deg,
+  #30164d 36deg 72deg,
+  #f5efdc 72deg 108deg,
+  #efc438 108deg 144deg,
+  #30164d 144deg 180deg,
+  #f5efdc 180deg 216deg,
+  #efc438 216deg 252deg,
+  #30164d 252deg 288deg,
+  #19171b 288deg 324deg,
+  var(--campus-cream) 324deg 360deg);
 
-  box-shadow:
-    0 0 20px rgba(251, 191, 36, 0.5),
-    0 10px 30px rgba(0, 0, 0, 0.5);
+box-shadow:
+  0 0 0 3px var(--scoreboard-gold),
+  0 5px 0 var(--campus-purple);
 
   transition: transform 3s cubic-bezier(
-    0.15,
-    0.65,
-    0.15,
-    1
-  );
+  0.15,
+  0.65,
+  0.15,
+  1
+);
 }
 
 .wheel-center {
@@ -317,10 +345,10 @@ button:disabled {
 
   transform: translate(-50%, -50%);
 
-  background: #111827;
-  color: white;
+    background: #111827;
+    color: white;
 
-  border: 5px solid #fbbf24;
+    border: 5px solid #fbbf24;
   border-radius: 50%;
 
   font-size: 18px;
@@ -335,26 +363,22 @@ button:disabled {
 
   transform: translateX(-50%);
 
-  color: #fbbf24;
+  color: var(--campus-purple);
 
   font-size: 45px;
 
   z-index: 5;
 
-  text-shadow: 0 2px 4px black;
+  text-shadow: none;
 }
 
 .spin-button {
   padding: 12px 30px;
 
-  background: linear-gradient(
-    135deg,
-    #fbbf24,
-    #f59e0b
-  );
+  background: var(--scoreboard-gold);
+  color: var(--campus-purple);
 
-  color: #111827;
-
+  box-shadow: 3px 3px 0 var(--campus-purple);
   font-size: 18px;
 }
 
@@ -377,38 +401,47 @@ button:disabled {
 
 .wheel-label {
   position: absolute;
-
   top: 0;
   left: 50%;
 
   width: 70px;
   height: 50%;
-
-  transform-origin: bottom center;
-
   margin-left: -35px;
 
+  transform-origin: bottom center;
   text-align: center;
 
-  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
   font-weight: bold;
 
-  color: white;
+  color: var(--campus-purple);
+  text-shadow: none;
+}
 
-  text-shadow:
-    1px 1px 2px black,
-    -1px -1px 2px black;
+.wheel-label:nth-child(2),
+.wheel-label:nth-child(5),
+.wheel-label:nth-child(8),
+.wheel-label:nth-child(9) {
+  color: var(--campus-cream);
 }
 
 .wheel-label span {
-  display: block;
+  .wheel-label:nth-child(9) span {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  line-height: 1.05;
+}
 
+  display: block;
   margin-top: 16px;
 }
 
 .round-indicator {
-  margin-bottom: 8px;
-  color: #d1d5db;
+  margin-bottom: 12px;
+  color: var(--campus-cream);
+
+  font-family: "Courier New", monospace;
   font-size: 14px;
   font-weight: bold;
   letter-spacing: 2px;
@@ -427,13 +460,17 @@ button:disabled {
 .start-screen button {
   padding: 16px 38px;
 
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  color: #111827;
+  background: var(--scoreboard-gold);
+  color: var(--campus-purple);
 
-  border-radius: 12px;
+  border: 3px solid var(--campus-purple);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--campus-purple);
 
-  font-size: 20px;
-  font-weight: bold;
+  font-family: Rockwell, "Clarendon", Georgia, serif;
+  font-size: 22px;
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 .winner-screen {

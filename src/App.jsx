@@ -320,10 +320,10 @@ function endGame() {
       >
         <span>
           {typeof value === 'number'
-            ? `$${value}`
-            : value === 'LOSE A TURN'
-              ? 'LOSE'
-              : 'BANKRUPT'}
+        ? `$${value}`
+        : value === 'LOSE A TURN'
+          ? 'LOSE'
+          : <>BANK<br />RUPT</>}
         </span>
       </div>
     ))}
