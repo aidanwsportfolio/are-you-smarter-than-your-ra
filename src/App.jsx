@@ -258,6 +258,36 @@ function endGame() {
 
           ) : (
             <div className="game-screen">
+          {/* Scoreboard */}
+          <div className="scoreboard">
+
+            <div
+              className={`score-card ${
+                currentTeam === 'RA' ? 'active-team' : ''
+              }`}
+            >
+              <h2>TEAM RA</h2>
+              <p>${raScore}</p>
+
+              <button onClick={() => setRaScore(raScore + 500)}>
+                +$500
+              </button>
+            </div>
+
+            <div
+              className={`score-card ${
+                currentTeam === 'Students' ? 'active-team' : ''
+              }`}
+            >
+              <h2>TEAM STUDENTS</h2>
+              <p>${studentScore}</p>
+
+              <button onClick={() => setStudentScore(studentScore + 500)}>
+                +$500
+              </button>
+            </div>
+
+          </div>
 
           {/* Current turn */}
           <div className="turn-banner">
@@ -294,6 +324,7 @@ function endGame() {
               ))}
             </div>
           </div>
+            <div className="play-area">
 
           {/* Wheel */}
           <div className="wheel-area">
@@ -352,6 +383,7 @@ function endGame() {
 
           </div>
 
+            <div className="guess-area">
           {/* Buy vowel */}
           <button
             onClick={() => setBuyingVowel(true)}
@@ -383,7 +415,13 @@ function endGame() {
               </button>
             ))}
           </div>
+            </div> {/* End guess-area */}
+            
+            </div> {/* End play-area */}
 
+            <div className="host-console">
+            <h3>Host Console</h3>
+            <div className="host-actions">
           {/* Puzzle controls */}
           <button onClick={() => setPuzzleSolved(true)}>
             Solve Puzzle
@@ -405,36 +443,7 @@ function endGame() {
               </button>
             )}
 
-          {/* Scoreboard */}
-          <div className="scoreboard">
-
-            <div
-              className={`score-card ${
-                currentTeam === 'RA' ? 'active-team' : ''
-              }`}
-            >
-              <h2>TEAM RA</h2>
-              <p>${raScore}</p>
-
-              <button onClick={() => setRaScore(raScore + 500)}>
-                +$500
-              </button>
-            </div>
-
-            <div
-              className={`score-card ${
-                currentTeam === 'Students' ? 'active-team' : ''
-              }`}
-            >
-              <h2>TEAM STUDENTS</h2>
-              <p>${studentScore}</p>
-
-              <button onClick={() => setStudentScore(studentScore + 500)}>
-                +$500
-              </button>
-            </div>
-
-          </div>
+          
 
           {/* Manual turn control */}
           <button
@@ -451,9 +460,12 @@ function endGame() {
             onClick={resetGame}
           >
             Reset Game
-          </button>
+                    </button>
 
-        </div>
+            </div> {/* End host-actions */}
+          </div> {/* End host-console */}
+
+        </div> 
       )}
 
     </div>

@@ -527,3 +527,76 @@ box-shadow:
 
   font-size: 18px;
 }
+
+/* Wheel and letter keyboard layout */
+
+.play-area {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  align-items: center;
+  gap: 32px;
+
+  max-width: 1100px;
+  margin: 30px auto;
+}
+
+.play-area .wheel-area {
+  margin: 0;
+}
+
+.guess-area {
+  min-width: 0;
+  padding: 24px 16px;
+
+  border: 2px solid var(--campus-purple);
+}
+
+.guess-area .letter-board {
+  margin: 20px auto 0;
+}
+
+@media (max-width: 800px) {
+  .play-area {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+/* Host console */
+
+.host-console {
+  max-width: 1100px;
+  margin: 24px auto;
+  padding: 18px;
+
+  border: 3px double var(--campus-purple);
+  text-align: left;
+}
+
+.host-console h3 {
+  margin: 0 0 14px;
+
+  font-family: Rockwell, "Clarendon", Georgia, serif;
+  font-size: 20px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.host-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.host-actions button {
+  margin: 0;
+  min-height: 44px;
+}
+
+@media (max-width: 600px) {
+  .host-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
