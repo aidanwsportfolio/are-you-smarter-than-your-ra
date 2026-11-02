@@ -374,3 +374,119 @@ button:disabled {
 .reset-button:hover {
   background: #b91c1c;
 }
+
+.wheel-label {
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  width: 70px;
+  height: 50%;
+
+  transform-origin: bottom center;
+
+  margin-left: -35px;
+
+  text-align: center;
+
+  font-size: 12px;
+  font-weight: bold;
+
+  color: white;
+
+  text-shadow:
+    1px 1px 2px black,
+    -1px -1px 2px black;
+}
+
+.wheel-label span {
+  display: block;
+
+  margin-top: 16px;
+}
+
+.round-indicator {
+  margin-bottom: 8px;
+  color: #d1d5db;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+/* Start screen */
+
+.start-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 55vh;
+}
+
+.start-screen button {
+  padding: 16px 38px;
+
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #111827;
+
+  border-radius: 12px;
+
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.winner-screen {
+  min-height: 70vh;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.winner-screen h2 {
+  margin: 0 0 20px;
+
+  color: #fbbf24;
+  font-size: 32px;
+}
+
+.winner-screen h1 {
+  margin: 10px 0 25px;
+  padding: 0;
+
+  font-size: 55px;
+  text-align: center;
+}
+
+.final-scores {
+  min-width: 350px;
+  margin: 0 0 25px;
+  padding: 20px 40px;
+
+  background: rgba(0, 0, 0, 0.3);
+
+  border: 2px solid #fbbf24;
+  border-radius: 15px;
+
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.final-scores p {
+  margin: 10px 0;
+}
+
+.winner-screen button {
+  padding: 14px 30px;
+
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #111827;
+
+  font-size: 18px;
+}

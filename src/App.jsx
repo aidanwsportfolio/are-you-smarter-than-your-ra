@@ -14,7 +14,8 @@ function App() {
   const [buyingVowel, setBuyingVowel] = useState(false)
   const [wheelRotation, setWheelRotation] = useState(0)
   const [isSpinning, setIsSpinning] = useState(false)
- 
+  const [gameOver, setGameOver] = useState(false)
+
   // Game data
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
   const vowels = ['A', 'E', 'I', 'O', 'U']
@@ -34,21 +35,47 @@ function App() {
 
   const puzzles = [
     {
+      category: 'A Campus Love Story',
+      answer: 'A DATE AT THE FIVE DINING HALL'
+    },
+    {
+      category: 'RA Life',
+      answer: "DID YOU FILL OUT YOUR ROOMMATE AGREEMENT"
+    },
+    {
+      category: 'People',
+      answer: 'SOUTHWEST RESIDENCE COORDINATOR DANA BETHEL'
+    },
+    {
+      category: 'College Life',
+      answer: 'I HAVE AN EIGHT AM TOMORROW'
+    },
+    {
+      category: 'RA Life',
+      answer:
+      'HAVE YOU TRIED SUBMITTING A WORK ORDER'
+    },
+    {
       category: 'Phrase',
       answer:
         'I PAY 70 THOUSAND A YEAR TO GO TO LSU AND WE ARE GOD AWFUL AT FOOTBALL'
     },
     {
-      category: 'Campus Life',
-      answer: 'FIZZ'
+      category: 'Phrase',
+      answer:
+      'WEST SIDE BEST SIDE'
     },
     {
-      category: 'Thing',
-      answer: 'THE FIVE DINING HALL'
+      category: 'College Life',
+      answer: 'REFUND CHECK JUST HIT'
     },
     {
-      category: 'People',
-      answer: 'RESIDENCE COORDINATOR DANA BETHEL'
+      category: 'College Life',
+      answer: 'CAN YOU SEND ME THE QR CODE'
+    },
+    {
+      category: 'Final Round',
+      answer: 'ARE YOU SMARTER THAN YOUR RA'
     }
   ]
 
@@ -127,12 +154,19 @@ function App() {
 
     const segmentAngle = 360 / wheelValues.length
 
-    const extraSpins = 5 * 360
+    // Center of the randomly selected segment
+    const segmentCenter =
+      randomIndex * segmentAngle + segmentAngle / 2
+
+    // Keep the wheel's current full rotations,
+    // then add five more spins and land the selected segment at the top
+    const currentFullRotations =
+      Math.floor(wheelRotation / 360) * 360
 
     const targetRotation =
-      wheelRotation +
-      extraSpins +
-      (360 - randomIndex * segmentAngle)
+      currentFullRotations +
+      5 * 360 +
+      (360 - segmentCenter)
 
     setWheelRotation(targetRotation)
 
@@ -181,14 +215,49 @@ function App() {
   setBuyingVowel(false)
   setWheelRotation(0)
   setIsSpinning(false)
+  setGameOver(false)
 }
+
+function endGame() {
+  setGameOver(true)
+}
+
   return (
     <div>
       <h1>Are You Smarter Than Your RA?</h1>
       <h2>Team RA vs. Team Students</h2>
 
-      {gameStarted ? (
-        <div className="game-screen">
+      {!gameStarted ? (
+        <div className="start-screen">
+          <button onClick={() => setGameStarted(true)}>
+            Start Game
+          </button>
+        </div>
+      ) : gameOver ? (
+        <div className="winner-screen">
+          <h2>🏆 GAME OVER 🏆</h2>
+
+          <h1>
+            {raScore > studentScore
+              ? 'TEAM RA WINS!'
+              : studentScore > raScore
+                ? 'TEAM STUDENTS WIN!'
+                : "IT'S A TIE!"}
+          </h1>
+
+          <div className="final-scores">
+            <p>Team RA: ${raScore}</p>
+            <p>Team Students: ${studentScore}</p>
+          </div>
+
+          <button onClick={resetGame}>
+            Play Again
+          </button>
+
+          </div>
+
+          ) : (
+            <div className="game-screen">
 
           {/* Current turn */}
           <div className="turn-banner">
@@ -197,6 +266,9 @@ function App() {
 
           {/* Puzzle */}
           <div className="puzzle-section">
+            <div className="round-indicator">
+              ROUND {currentPuzzleIndex + 1} OF {puzzles.length}
+            </div>
             <h3 className="category">
               Category: {currentPuzzle.category}
             </h3>
@@ -233,16 +305,33 @@ function App() {
               </div>
 
               <div
-                className="wheel"
-                style={{
-                  transform: `rotate(${wheelRotation}deg)`
-                }}
-              >
-                <div className="wheel-center">
-                  SPIN
-                </div>
-              </div>
+  className="wheel"
+    style={{
+      transform: `rotate(${wheelRotation}deg)`
+    }}
+  >
+    {wheelValues.map((value, index) => (
+      <div
+        className="wheel-label"
+        key={index}
+        style={{
+          transform: `rotate(${index * 36 + 18}deg)`
+        }}
+      >
+        <span>
+          {typeof value === 'number'
+            ? `$${value}`
+            : value === 'LOSE A TURN'
+              ? 'LOSE'
+              : 'BANKRUPT'}
+        </span>
+      </div>
+    ))}
 
+    <div className="wheel-center">
+      SPIN
+    </div>
+  </div>
             </div>
 
             <button
@@ -306,6 +395,15 @@ function App() {
           >
             Next Round
           </button>
+            
+            {currentPuzzleIndex === puzzles.length - 1 && (
+              <button
+                className="end-game-button"
+                onClick={endGame}
+              >
+                End Game
+              </button>
+            )}
 
           {/* Scoreboard */}
           <div className="scoreboard">
@@ -349,17 +447,15 @@ function App() {
             Switch Turn
           </button>
             <button
-              className="reset-button"
-              onClick={resetGame}
-            >
-              Reset Game
-            </button>
+            className="reset-button"
+            onClick={resetGame}
+          >
+            Reset Game
+          </button>
+
         </div>
-      ) : (
-        <button onClick={() => setGameStarted(true)}>
-          Start Game
-        </button>
       )}
+
     </div>
   )
 }
