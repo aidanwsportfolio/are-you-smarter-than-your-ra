@@ -50,15 +50,17 @@ h1 {
 .turn-banner {
   display: inline-block;
   margin: 10px 0 20px;
-  padding: 10px 28px;
+  padding: 10px 24px;
 
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  color: #111827;
+  background: var(--scoreboard-gold);
+  color: var(--campus-purple);
+  border: 2px solid var(--campus-purple);
+  border-radius: 0;
 
-  border-radius: 30px;
-
-  font-size: 22px;
+  font-family: Rockwell, "Clarendon", Georgia, serif;
+  font-size: 20px;
   font-weight: bold;
+  text-transform: uppercase;
 }
 
 
@@ -116,11 +118,11 @@ h1 {
   background: var(--campus-cream);
   color: var(--campus-purple);
 
-  border: 2px solid #21132f;
+  border: 2px solid var(--campus-purple);
   border-radius: 0;
   box-shadow:
     inset 0 0 0 2px #d7ccb0,
-    0 3px 0 #160c23;
+    0 3px 0 var(--campus-purple);
 
   font-family: Rockwell, "Clarendon", Georgia, serif;
   font-size: 30px;
@@ -383,20 +385,22 @@ box-shadow:
 }
 
 .spin-result {
-  margin-top: 12px;
+  margin-top: 16px;
+  color: var(--campus-purple);
 
-  color: #fbbf24;
-
+  font-family: "Courier New", monospace;
   font-size: 28px;
   font-weight: bold;
 }
 
 .reset-button {
-  background: #dc2626;
+  background: var(--campus-purple);
+  color: var(--campus-cream);
 }
 
-.reset-button:hover {
-  background: #b91c1c;
+.reset-button:hover:not(:disabled) {
+  background: var(--scoreboard-gold);
+  color: var(--campus-purple);
 }
 
 .wheel-label {
@@ -427,14 +431,14 @@ box-shadow:
 }
 
 .wheel-label span {
-  .wheel-label:nth-child(9) span {
+  display: block;
+  margin-top: 16px;
+}
+
+.wheel-label:nth-child(9) span {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 11px;
   line-height: 1.05;
-}
-
-  display: block;
-  margin-top: 16px;
 }
 
 .round-indicator {
@@ -476,6 +480,7 @@ box-shadow:
 .winner-screen {
   min-height: 70vh;
   width: 100%;
+  padding: 32px 16px;
 
   display: flex;
   flex-direction: column;
@@ -487,30 +492,30 @@ box-shadow:
 
 .winner-screen h2 {
   margin: 0 0 20px;
-
-  color: #fbbf24;
-  font-size: 32px;
+  color: var(--campus-purple);
+  font-size: 28px;
 }
 
 .winner-screen h1 {
   margin: 10px 0 25px;
   padding: 0;
-
-  font-size: 55px;
-  text-align: center;
+  font-size: clamp(30px, 6vw, 55px);
+  overflow-wrap: anywhere;
 }
 
 .final-scores {
-  min-width: 350px;
+  width: 100%;
+  max-width: 450px;
+  min-width: 0;
   margin: 0 0 25px;
-  padding: 20px 40px;
+  padding: 20px;
 
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--campus-purple);
+  color: var(--campus-cream);
+  border: 4px double var(--scoreboard-gold);
+  border-radius: 0;
 
-  border: 2px solid #fbbf24;
-  border-radius: 15px;
-
-  text-align: center;
+  font-family: "Courier New", monospace;
   font-size: 24px;
   font-weight: bold;
 }
@@ -521,10 +526,8 @@ box-shadow:
 
 .winner-screen button {
   padding: 14px 30px;
-
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  color: #111827;
-
+  background: var(--scoreboard-gold);
+  color: var(--campus-purple);
   font-size: 18px;
 }
 
@@ -598,5 +601,96 @@ box-shadow:
   .host-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Keyboard focus */
+
+button:focus-visible {
+  outline: 3px solid var(--campus-purple);
+  outline-offset: 4px;
+}
+
+.score-card button:focus-visible {
+  outline-color: var(--scoreboard-gold);
+}
+
+/* Small-screen layout */
+
+@media (max-width: 600px) {
+  .game-screen {
+    padding: 16px 12px 30px;
+  }
+
+  .scoreboard {
+    gap: 12px;
+  }
+
+  .score-card {
+    padding: 14px 8px;
+  }
+
+  .score-card h2 {
+    font-size: 18px;
+  }
+
+  .score-card p {
+    padding: 8px 2px;
+    font-size: clamp(20px, 6vw, 32px);
+  }
+
+  .score-card button {
+    margin: 4px 0;
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .puzzle-section {
+    padding: 18px 8px;
+  }
+
+  .category {
+    padding: 8px 12px;
+    font-size: 16px;
+    overflow-wrap: anywhere;
+  }
+
+  .puzzle-word {
+    gap: 2px;
+    margin: 4px;
+  }
+
+  .puzzle-tile {
+    width: clamp(14px, 3.8vw, 22px);
+    height: 32px;
+    font-size: 18px;
+  }
+
+  .wheel-container {
+    width: 250px;
+    height: 250px;
+  }
+
+  .guess-area {
+    padding: 20px 8px;
+  }
+
+  .letter-board {
+    gap: 6px;
+  }
+
+  .letter-board button {
+    margin: 0;
+  }
+
+  .host-actions button {
+    padding: 10px 8px;
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wheel {
+    transition: none;
   }
 }
